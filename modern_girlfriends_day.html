@@ -279,13 +279,8 @@ h1{
   backdrop-filter:blur(12px); border:1px solid rgba(255,255,255,.16); box-shadow:0 16px 40px rgba(0,0,0,.28);
 }
 .activity-tracker h4{margin:0 0 8px; font-size:.95rem; letter-spacing:.16em; text-transform:uppercase; color:#ffd6e5;}
-.tracker-summary{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:8px;}
-.tracker-pill{padding:6px 8px; border-radius:999px; background:rgba(255,255,255,.1); color:#fff; font-size:.74rem;}
-.tracker-list{list-style:none; padding:0; margin:8px 0 0; display:grid; gap:6px; max-height:160px; overflow:auto;}
-.tracker-list li{font-size:.78rem; color:#f8dfe8; background:rgba(255,255,255,.06); padding:7px 8px; border-radius:10px;}
-.tracker-actions{display:flex; gap:8px; margin-top:10px;}
-.tracker-actions button{border:none; border-radius:999px; padding:7px 10px; font-size:.75rem; cursor:pointer; background:#ff4d7d; color:#fff;}
-.tracker-actions button.secondary{background:rgba(255,255,255,.12); color:#fff;}
+.tracker-summary{display:flex; gap:8px; flex-wrap:wrap;}
+.tracker-pill{padding:6px 10px; border-radius:999px; background:linear-gradient(135deg, rgba(255,77,125,.95), rgba(255,154,193,.9)); color:#fff; font-size:.78rem; font-weight:600; box-shadow:0 8px 20px rgba(255,77,125,.2);}
 </style>
 </head>
 <body>
@@ -334,13 +329,8 @@ h1{
 </div>
 
 <div class="activity-tracker" id="activityTracker">
-  <h4>Live activity</h4>
+  <h4>Sweet mood</h4>
   <div class="tracker-summary" id="trackerSummary"></div>
-  <ul class="tracker-list" id="trackerList"></ul>
-  <div class="tracker-actions">
-    <button id="exportTracker">Export log</button>
-    <button class="secondary" id="clearTracker">Reset</button>
-  </div>
 </div>
 
 <div class="letter" id="letter">
@@ -411,9 +401,6 @@ const trackerState={
   events: JSON.parse(localStorage.getItem(trackerKey) || '[]')
 };
 const trackerSummary=document.getElementById('trackerSummary');
-const trackerList=document.getElementById('trackerList');
-const exportTracker=document.getElementById('exportTracker');
-const clearTracker=document.getElementById('clearTracker');
 
 function getTargetLabel(target){
   if(!target || target===document.body) return 'page';
@@ -453,13 +440,6 @@ function updateTrackerUI(){
     trackerSummary.appendChild(span);
   });
 
-  trackerList.innerHTML='';
-  trackerState.events.slice().reverse().forEach(event=>{
-    const li=document.createElement('li');
-    const detailText = event.detail && Object.keys(event.detail).length ? ` · ${JSON.stringify(event.detail)}` : '';
-    li.textContent=`${event.time} · ${event.type}${detailText}`;
-    trackerList.appendChild(li);
-  });
 }
 
 function playSong(){
@@ -612,21 +592,6 @@ window.addEventListener('touchstart', e => {
 }, {passive:true});
 window.addEventListener('keydown', e => {
   recordEvent('keys', {key:e.key});
-});
-exportTracker.addEventListener('click', ()=>{
-  const blob=new Blob([JSON.stringify(trackerState.events, null, 2)], {type:'application/json'});
-  const url=URL.createObjectURL(blob);
-  const a=document.createElement('a');
-  a.href=url;
-  a.download='her-activity-log.json';
-  a.click();
-  URL.revokeObjectURL(url);
-});
-clearTracker.addEventListener('click', ()=>{
-  trackerState.events=[];
-  localStorage.removeItem(trackerKey);
-  updateTrackerUI();
-  recordEvent('clear', {target:'#clearTracker'});
 });
 moveEyes(window.innerWidth/2, window.innerHeight/2);
 updateTrackerUI();
