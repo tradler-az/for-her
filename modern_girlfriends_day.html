@@ -274,13 +274,15 @@ h1{
 }
 .celebrate-card h3{margin:0 0 10px; font-size:2rem; color:#be123c;}
 .activity-tracker{
-  position:fixed; left:16px; bottom:16px; z-index:8; width:min(320px, calc(100vw - 32px));
-  padding:14px 14px 12px; border-radius:18px; background:rgba(8,6,11,.78);
-  backdrop-filter:blur(12px); border:1px solid rgba(255,255,255,.16); box-shadow:0 16px 40px rgba(0,0,0,.28);
+  position:fixed; left:16px; bottom:16px; z-index:8;
+  border:none; background:linear-gradient(135deg, rgba(255,77,125,.95), rgba(255,154,193,.9));
+  color:#fff; border-radius:999px; padding:12px 14px; box-shadow:0 12px 28px rgba(255,77,125,.24);
+  cursor:pointer; display:flex; align-items:center; gap:8px;
+  font-weight:700; backdrop-filter:blur(10px);
 }
-.activity-tracker h4{margin:0 0 8px; font-size:.95rem; letter-spacing:.16em; text-transform:uppercase; color:#ffd6e5;}
-.tracker-summary{display:flex; gap:8px; flex-wrap:wrap;}
-.tracker-pill{padding:6px 10px; border-radius:999px; background:linear-gradient(135deg, rgba(255,77,125,.95), rgba(255,154,193,.9)); color:#fff; font-size:.78rem; font-weight:600; box-shadow:0 8px 20px rgba(255,77,125,.2);}
+.activity-tracker:hover{transform:translateY(-2px) scale(1.02);} 
+.activity-tracker .icon{font-size:1.05rem;}
+.activity-tracker .text{font-size:.82rem; letter-spacing:.12em; text-transform:uppercase;}
 </style>
 </head>
 <body>
@@ -328,10 +330,10 @@ h1{
   </div>
 </div>
 
-<div class="activity-tracker" id="activityTracker">
-  <h4>Sweet mood</h4>
-  <div class="tracker-summary" id="trackerSummary"></div>
-</div>
+<button class="activity-tracker" id="activityTracker" type="button">
+  <span class="icon">💗</span>
+  <span class="text" id="trackerSummary">Sweet mood</span>
+</button>
 
 <div class="letter" id="letter">
   <div class="letter-card">
@@ -423,23 +425,8 @@ function recordEvent(type, detail={}){
 }
 
 function updateTrackerUI(){
-  trackerSummary.innerHTML='';
-  const mood = trackerState.counts.yes ? 'excited' : trackerState.counts.no ? 'playful' : 'curious';
-  const chips=[
-    `Mood: ${mood}`,
-    `Clicks: ${trackerState.counts.clicks}`,
-    `Moves: ${trackerState.counts.moves}`,
-    `Touches: ${trackerState.counts.touches}`,
-    `Yes: ${trackerState.counts.yes}`,
-    `No: ${trackerState.counts.no}`
-  ];
-  chips.forEach(text=>{
-    const span=document.createElement('span');
-    span.className='tracker-pill';
-    span.textContent=text;
-    trackerSummary.appendChild(span);
-  });
-
+  const mood = trackerState.counts.yes ? 'blushing' : trackerState.counts.no ? 'playful' : 'curious';
+  trackerSummary.textContent = `Sweet mood · ${mood}`;
 }
 
 function playSong(){
