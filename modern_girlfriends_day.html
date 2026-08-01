@@ -182,6 +182,11 @@ h1{
   position:relative;
   margin-top:28px;
   min-height:80px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:14px;
+  flex-wrap:wrap;
 }
 .btn{
   border:none;
@@ -204,7 +209,7 @@ h1{
   50%{transform:scale(1.08)}
 }
 #noBtn{
-  position:fixed;
+  position:relative;
   z-index:40;
   display:inline-flex;
   align-items:center;
@@ -498,20 +503,12 @@ playSongBtn.addEventListener('click', ()=>{
 });
 
 function placeNo(){
-  if(window.innerWidth < 768){
-    noBtn.style.position='fixed';
-    noBtn.style.left='auto';
-    noBtn.style.top='auto';
-    noBtn.style.right='24px';
-    noBtn.style.bottom='24px';
-    noBtn.style.zIndex='30';
-    return;
-  }
-  noBtn.style.position='fixed';
-  noBtn.style.left=`${Math.min(window.innerWidth - 140, window.innerWidth/2 + 140)}px`;
-  noBtn.style.top=`${Math.min(window.innerHeight - 70, window.innerHeight/2 + 90)}px`;
+  noBtn.style.position='relative';
+  noBtn.style.left='auto';
+  noBtn.style.top='auto';
   noBtn.style.right='auto';
   noBtn.style.bottom='auto';
+  noBtn.style.zIndex='30';
 }
 placeNo();
 window.addEventListener('resize',placeNo);
@@ -540,25 +537,17 @@ window.addEventListener('touchmove',e=>{
 },{passive:true});
 
 function teleport(){
-  const r=noBtn.getBoundingClientRect();
-  if(window.innerWidth < 768){
-    noBtn.style.left='auto';
-    noBtn.style.top='auto';
-    noBtn.style.right='24px';
-    noBtn.style.bottom='24px';
-    noBtn.style.transform='translate(0, 0)';
-    noBtn.textContent=noTexts[Math.floor(Math.random()*noTexts.length)];
-    recordEvent('no', {target:'#noBtn'});
-    return;
-  }
-  const x=Math.random()*(window.innerWidth-r.width-24);
-  const y=Math.random()*(window.innerHeight-r.height-24);
-  noBtn.style.left=x+'px';
-  noBtn.style.top=y+'px';
+  const container = document.querySelector('.buttons');
+  const r = container.getBoundingClientRect();
+  const x = Math.random() * Math.max(120, r.width - 140);
+  const y = Math.random() * Math.max(40, r.height - 54);
+  noBtn.style.position='absolute';
+  noBtn.style.left=`${x}px`;
+  noBtn.style.top=`${y}px`;
   noBtn.style.right='auto';
   noBtn.style.bottom='auto';
-  noBtn.textContent=noTexts[Math.floor(Math.random()*noTexts.length)];
   noBtn.style.transform=`translate(${(Math.random()-.5)*8}px, ${(Math.random()-.5)*8}px)`;
+  noBtn.textContent=noTexts[Math.floor(Math.random()*noTexts.length)];
   recordEvent('no', {target:'#noBtn'});
 }
 window.addEventListener('mousemove',e=>{
