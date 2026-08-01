@@ -28,9 +28,9 @@ body{
   position:fixed; inset:0; pointer-events:none; z-index:1; overflow:hidden;
 }
 .heart-float{
-  position:absolute; width:14px; height:14px; opacity:.9;
+  position:absolute; width:16px; height:16px; opacity:.95;
   animation:driftHeart linear infinite;
-  filter:drop-shadow(0 0 10px rgba(255,77,125,.28));
+  filter:drop-shadow(0 0 14px rgba(255,77,125,.38));
 }
 .heart-float::before,.heart-float::after{
   content:""; position:absolute; width:14px; height:14px; background:inherit; border-radius:999px;
@@ -38,9 +38,9 @@ body{
 .heart-float::before{left:-7px}
 .heart-float::after{top:-7px}
 @keyframes driftHeart{
-  from{transform:translateY(110vh) rotate(45deg); opacity:0}
-  10%{opacity:1}
-  to{transform:translateY(-20vh) rotate(45deg); opacity:0}
+  from{transform:translateY(110vh) rotate(45deg) scale(.7); opacity:0}
+  12%{opacity:1}
+  to{transform:translateY(-20vh) rotate(45deg) scale(1.25); opacity:0}
 }
 .bg{
   position:fixed; inset:0;
@@ -101,6 +101,11 @@ body{
   backdrop-filter:blur(22px);
   border:1px solid rgba(255,255,255,.16);
   box-shadow:0 30px 90px rgba(0,0,0,.45);
+  animation:cardGlow 5s ease-in-out infinite alternate;
+}
+@keyframes cardGlow{
+  from{box-shadow:0 30px 90px rgba(0,0,0,.45), 0 0 0 rgba(255,77,125,0)}
+  to{box-shadow:0 30px 90px rgba(0,0,0,.45), 0 0 36px rgba(255,77,125,.22)}
 }
 .eyebrow{
   letter-spacing:.28em;
@@ -129,7 +134,7 @@ h1{
 .heart{
   display:inline-block;
   animation:heartbeat 1.25s ease-in-out infinite;
-  filter:drop-shadow(0 0 18px rgba(255,77,125,.45));
+  filter:drop-shadow(0 0 24px rgba(255,77,125,.65));
 }
 @keyframes heartbeat{
   0%,100%{transform:scale(1)}
@@ -161,7 +166,7 @@ h1{
 .yes:hover{transform:translateY(-2px) scale(1.03)}
 @keyframes pulse{
   0%,100%{transform:scale(1)}
-  50%{transform:scale(1.05)}
+  50%{transform:scale(1.08)}
 }
 #noBtn{
   position:fixed;
@@ -311,7 +316,7 @@ h1{
     </div>
     <h1 class="gradient">Will you be my forever Girlfriend <span class="heart">❤</span></h1>
     <p class="sub" id="line">
-      I was going to write something simple. Then I realized you deserve something that looks the way you make me feel cinematic, impossible to ignore, and a little dangerous for my heartbeat.
+      I was going to write something simple. Then I realized you deserve something that feels like us — soft, unforgettable, and a little dangerous for my heart.
     </p>
 
     <div class="buttons">
@@ -340,9 +345,9 @@ h1{
     <div class="letter-hero"></div>
     <div class="letter-body">
       <h2>For the girl who keeps winning my heart</h2>
-      <p>I do not want perfect days. I want the ordinary ones with you the random laughter, the late-night conversations, the teasing, the silence that somehow feels full, and the tiny moments that become memories without asking for permission.</p>
-      <p>If forever is real, I would like to spend it learning new versions of you every year, celebrating your wins, stealing your hoodies, and reminding you that you are loved more than I probably know how to explain.</p>
-      <p>So this is me, with all the confidence I can borrow from my heartbeat, asking one question that already knows its favorite answer.</p>
+      <p>I do not want perfect days. I want the ordinary ones with you — the laughter, the late-night conversations, the teasing, the silence that somehow feels full, and the little moments that become forever in my heart.</p>
+      <p>If forever is real, I would like to spend it learning new versions of you every year, celebrating your wins, stealing your hoodies, and reminding you that you are loved more deeply than I can fully say.</p>
+      <p>So this is me, with every brave little beat of my heart, asking one question that already knows its favorite answer.</p>
       <div class="signature">— Yours, always ❤ Dog</div>
       <button class="play-song-btn" id="playSongBtn">Play the song</button>
     </div>
@@ -393,7 +398,7 @@ const lines=[
   "Every playlist somehow reminds me of you.",
   "I don't want perfect days. I want ordinary days with you.",
   "You somehow made 'home' sound like a person.",
-  "I think my future has been accidentally spelling your name."
+  "And now my whole future feels like it was made for us."
 ];
 let lineIndex=0;
 
